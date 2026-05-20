@@ -1,26 +1,47 @@
+# =========================================================
 # Build output
+# =========================================================
 **/[Bb]in/
 **/[Oo]bj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
 
+# =========================================================
 # Visual Studio / Rider / VS Code user files
+# =========================================================
 .vs/
 .idea/
 .vscode/.vs/
-*.user
+
 *.rsuser
 *.suo
+*.user
 *.userosscache
 *.sln.docstates
+*.userprefs
 
+# =========================================================
 # Test and coverage output
+# =========================================================
 TestResults/
+[Tt]est[Rr]esult*/
 coverage/
+[Cc]overage/
 *.coverage
 *.coveragexml
 coverage.cobertura.xml
+*.trx
 
+# =========================================================
 # Logs and temporary files
+# =========================================================
 logs/
+[Ll]ogs/
 *.log
 *.tmp
 *.temp
@@ -29,16 +50,52 @@ logs/
 *.swp
 ~$*
 
+# =========================================================
+# OS generated files
+# =========================================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================================================
 # Local SQLite database files
-src/SecureFileCloud.API/AppData/Database/*.db
-src/SecureFileCloud.API/AppData/Database/*.db-*
-src/SecureFileCloud.API/AppData/Database/*.sqlite
-src/SecureFileCloud.API/AppData/Database/*.sqlite3
+# Mantém a pasta Database no repositório via .gitkeep,
+# mas ignora bancos gerados localmente.
+# =========================================================
+src/SecureFileCloud.API/AppData/Database/*
 !src/SecureFileCloud.API/AppData/Database/.gitkeep
 
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# =========================================================
 # Local uploaded files
+# Mantém a pasta FileStorage no repositório via .gitkeep,
+# mas ignora arquivos enviados localmente.
+# =========================================================
 src/SecureFileCloud.API/AppData/FileStorage/*
 !src/SecureFileCloud.API/AppData/FileStorage/.gitkeep
 
-# Locally generated archives
+# =========================================================
+# Locally generated archives and test files
+# =========================================================
 *.zip
+*.rar
+*.7z
+
+# =========================================================
+# Publish output
+# =========================================================
+publish/
+[Pp]ublish/
+*.pubxml.user
+
+# =========================================================
+# NuGet
+# =========================================================
+*.nupkg
+packages/
