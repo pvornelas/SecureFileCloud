@@ -1,0 +1,51 @@
+@host = http://localhost:5299
+@accessToken = seu-token-aqui
+@arquivoId = 00000000-0000-0000-0000-000000000000
+@arquivoId2 = 11111111-1111-1111-1111-111111111111
+
+### Listar arquivos
+GET {{host}}/api/arquivo
+Accept: application/json
+X-Access-Token: {{accessToken}}
+
+### Obter metadados por ID
+GET {{host}}/api/arquivo/{{arquivoId}}
+Accept: application/json
+X-Access-Token: {{accessToken}}
+
+### Upload simples
+POST {{host}}/api/arquivo/enviar
+X-Access-Token: {{accessToken}}
+Content-Type: multipart/form-data; boundary=securefilecloud-boundary
+
+--securefilecloud-boundary
+Content-Disposition: form-data; name="arquivo"; filename="contrato-exemplo.pdf"
+Content-Type: application/pdf
+
+< ./AppData/MockFiles/contrato-exemplo.pdf
+--securefilecloud-boundary--
+
+### Upload múltiplo
+POST {{host}}/api/arquivo/enviar-multiplos
+X-Access-Token: {{accessToken}}
+Content-Type: multipart/form-data; boundary=securefilecloud-multiple-boundary
+
+--securefilecloud-multiple-boundary
+Content-Disposition: form-data; name="arquivos"; filename="contrato-exemplo.pdf"
+Content-Type: application/pdf
+
+< ./AppData/MockFiles/contrato-exemplo.pdf
+--securefilecloud-multiple-boundary
+Content-Disposition: form-data; name="arquivos"; filename="imagem-exemplo.jpg"
+Content-Type: image/jpeg
+
+< ./AppData/MockFiles/imagem-exemplo.jpg
+--securefilecloud-multiple-boundary--
+
+### Download simples
+GET {{host}}/api/arquivo/baixar/{{arquivoId}}
+X-Access-Token: {{accessToken}}
+
+### Download múltiplo em ZIP
+GET {{host}}/api/arquivo/baixar-multiplos?ids={{arquivoId}}&ids={{arquivoId2}}
+X-Access-Token: {{accessToken}}
