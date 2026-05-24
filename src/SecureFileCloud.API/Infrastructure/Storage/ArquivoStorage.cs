@@ -1,4 +1,5 @@
-﻿using SecureFileCloud.API.Application.Interfaces;
+﻿using System.Security.Cryptography;
+using SecureFileCloud.API.Application.Interfaces;
 
 namespace SecureFileCloud.API.Infrastructure.Storage;
 
@@ -23,11 +24,9 @@ public class ArquivoStorage : IArquivoStorage
 
     public async Task<ArquivoArmazenado> SalvarAsync(ArquivoParaArmazenar arquivo, CancellationToken cancellationToken = default)
     {
-        var nomeOriginal = Path.GetFileName(arquivo.NomeOriginal);
+        var nomeOriginal = Path.GetFileName(arquivo.NomeOriginal);        
 
-        var extensao = Path.GetExtension(nomeOriginal).ToLowerInvariant();
-
-        var nomeArmazenado = $"{Guid.NewGuid():N}{extensao}";
+        var nomeArmazenado = GerarNomeSeguro(nomeOriginal);
 
         var caminhoCompleto = Path.Combine(_basePath, nomeArmazenado);
 
@@ -98,5 +97,14 @@ public class ArquivoStorage : IArquivoStorage
         var nomeSeguro = Path.GetFileName(nomeArmazenado);
 
         return Path.Combine(_basePath, nomeSeguro);
+    }
+
+    private static string GerarNomeSeguro(string nomeOriginal)
+    {
+        var extensao = Path.GetExtension(nomeOriginal).ToLowerInvariant();
+        var bytes = RandomNumberGenerator.GetBytes(32); // 32 bytes = 256 bits
+        var nomeAleatorio = Convert.ToHexString(bytes).ToLowerInvariant();
+
+        return $"{nomeAleatorio}{extensao}";
     }
 }
